@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Room Booking</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Redirect to guest_details.html with roomType & price
+    function bookRoom(roomType, price) {
+      window.location.href = "guest_details.html?roomType=" 
+          + encodeURIComponent(roomType) 
+          + "&price=" + encodeURIComponent(price);
+    }
+  </script>
+</head>
+<body>
+  <h1>Choose Your Room</h1>
+  <div class="room-list">
+
+    <div class="room-box">
+      <img src="E:/Hotel Management System/b_image.jpeg" alt="Single Room" width="250">
+<br><br><br><br>
+      <h2>Single Room</h2>
+      <p>Price: ₹2000 / night</p>
+      <button onclick="bookRoom('Single Room', 2000)">Book Now</button>
+    </div>
+
+    <div class="room-box">
+      <img src="E:/Hotel Management System/b2_image.jpeg" alt="Double Room" width="250">
+<br><br><br><br>
+
+      <h2>Double Room</h2>
+      <p>Price: ₹3500 / night</p>
+      <button onclick="bookRoom('Double Room', 3500)">Book Now</button>
+    </div>
+
+    <div class="room-box">
+      <img src="E:/Hotel Management System/b3_image.jpeg" alt="Deluxe Room" width="250">
+<br><br><br><br>
+<br>
+      <h2>Deluxe Room</h2>
+      <p>Price: ₹5000 / night</p>
+      <button onclick="bookRoom('Deluxe Room', 5000)">Book Now</button>
+    </div>
+
+  </div>
+
+  <br><br><br><br><br><br>
+<br><br>
+  <a href="index.html">⬅ Back to Home</a>
+</body>
+</html>

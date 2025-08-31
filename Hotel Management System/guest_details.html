@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Guest Details</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Show room info and save guest details
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const roomType = urlParams.get("roomType") || "Not Selected";
+      const price = urlParams.get("price") || "0";
+
+      // Show selected room above form
+      document.getElementById("roomInfo").innerText = "Room: " + roomType + " | Price: ₹" + price + " / night";
+    }
+
+    function saveGuestDetails(event) {
+      event.preventDefault();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const roomType = urlParams.get("roomType") || "Not Selected";
+      const price = parseInt(urlParams.get("price")) || 0;
+
+      const guestName = document.getElementById("guestName").value.trim();
+      const guestPhone = document.getElementById("guestPhone").value.trim();
+      const guestEmail = document.getElementById("guestEmail").value.trim();
+      const checkIn = document.getElementById("checkIn").value;
+      const checkOut = document.getElementById("checkOut").value;
+
+      if (!guestName || !guestPhone || !guestEmail || !checkIn || !checkOut) {
+        alert("Please fill all fields");
+        return;
+      }
+
+      const booking = {
+        id: Date.now(),
+        roomType: roomType,
+        price: price,
+        guestName: guestName,
+        guestPhone: guestPhone,
+        guestEmail: guestEmail,
+        checkIn: checkIn,
+        checkOut: checkOut
+      };
+
+      let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+      bookings.push(booking);
+      localStorage.setItem("bookings", JSON.stringify(bookings));
+
+      alert("Booking confirmed for " + guestName + " in " + roomType);
+      window.location.href = "admin.html";
+    }
+  </script>
+</head>
+<body>
+  <h1>Enter Guest Details</h1>
+
+  <img src="E:/Hotel Management System/i_image.jpg" alt="Guest Form" class="hotel-img" width="250">
+
+  <!-- Show selected room info -->
+  <p id="roomInfo" style="font-weight: bold; color: green;"></p>
+
+  <form onsubmit="saveGuestDetails(event)">
+    <label>Name:</label>
+    <input type="text" id="guestName" required><br><br>
+
+    <label>Phone:</label>
+    <input type="text" id="guestPhone" required><br><br>
+
+    <label>Email:</label>
+    <input type="email" id="guestEmail" required><br><br>
+
+    <label>Check-in Date:</label>
+    <input type="date" id="checkIn" required><br><br>
+
+    <label>Check-out Date:</label>
+    <input type="date" id="checkOut" required><br><br>
+
+    <button type="submit">Confirm Booking</button>
+  </form>
+
+  <br>
+  <a href="room_booking.html">⬅ Back to Rooms</a>
+</body>
+</html>

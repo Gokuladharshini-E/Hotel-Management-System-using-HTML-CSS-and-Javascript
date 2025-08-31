@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Feedback</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Customer Feedback</h1>
+
+  <form id="feedbackForm">
+    <p id="guestInfo"></p>
+
+    <label>How was your stay?</label><br>
+    <textarea id="feedbackText" rows="4" cols="40" required></textarea><br><br>
+
+    <label>Rate us:</label>
+    <select id="feedbackRating" required>
+      <option value="">--Select--</option>
+      <option value="Excellent">Excellent</option>
+      <option value="Good">Good</option>
+      <option value="Average">Average</option>
+      <option value="Poor">Poor</option>
+    </select><br><br>
+
+    <button type="submit">Submit Feedback</button>
+  </form>
+
+  <div id="feedbackOutput"></div>
+
+  <script>
+// Get guest name from URL
+const urlParams = new URLSearchParams(window.location.search);
+const guestName = urlParams.get("guest");
+
+if (guestName) {
+  document.getElementById("guestInfo").innerText = `Guest: ${guestName}`;
+}
+
+// Feedback form handling
+document.getElementById("feedbackForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  let feedbackText = document.getElementById("feedbackText").value;
+  let feedbackRating = document.getElementById("feedbackRating").value;
+
+  let feedbackOutput = `
+    <h3>Thank you, ${guestName || "Guest"}!</h3>
+    <p><strong>Your Rating:</strong> ${feedbackRating}</p>
+    <p><strong>Your Comments:</strong> ${feedbackText}</p>
+  `;
+
+  document.getElementById("feedbackOutput").innerHTML = feedbackOutput;
+
+  // Clear form
+  document.getElementById("feedbackForm").reset();
+});
+</script>
+</body>
+</html>

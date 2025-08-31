@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard - Room Management</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+      box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background: #007bff;
+      color: white;
+    }
+
+    button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: #dc3545;
+      color: white;
+    }
+
+    button:hover {
+      background: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin Dashboard</h1>
+  <table id="bookingTable">
+    <tr>
+      <th>Room Type</th>
+      <th>Guest Name</th>
+      <th>Check-in</th>
+      <th>Check-out</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </table>
+
+  <script>
+    // Load bookings from localStorage
+    let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+
+    function loadBookings() {
+      const table = document.getElementById("bookingTable");
+
+      // Clear previous rows (except header)
+      table.innerHTML = `
+        <tr>
+          <th>Room Type</th>
+          <th>Guest Name</th>
+          <th>Check-in</th>
+          <th>Check-out</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>`;
+
+      bookings.forEach((b, index) => {
+        let row = table.insertRow();
+        row.insertCell(0).innerText = b.roomType;
+        row.insertCell(1).innerText = b.guestName;
+        row.insertCell(2).innerText = b.checkIn;
+        row.insertCell(3).innerText = b.checkOut;
+        row.insertCell(4).innerText = "Booked";
+
+        let actionCell = row.insertCell(5);
+        let btn = document.createElement("button");
+        btn.innerText = "Cancel";
+        btn.onclick = () => cancelBooking(index);
+        actionCell.appendChild(btn);
+      });
+    }
+
+    function cancelBooking(index) {
+      bookings.splice(index, 1);
+      localStorage.setItem("bookings", JSON.stringify(bookings));
+      loadBookings();
+      alert("Booking cancelled successfully!");
+    }
+
+    // Initial load
+    loadBookings();
+  </script>
+</body>
+</html>

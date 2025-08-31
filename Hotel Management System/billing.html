@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Billing</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Billing</h1>
+
+  <form id="billForm">
+    <label>Guest Name:</label>
+    <input type="text" id="billGuest" required><br><br>
+
+    <label>Room Type:</label>
+    <select id="billRoom">
+      <option value="Single">Single - ₹2000</option>
+      <option value="Double">Double - ₹3500</option>
+      <option value="Suite">Suite - ₹5000</option>
+    </select><br><br>
+
+    <label>Days Stayed:</label>
+    <input type="number" id="stayDays" min="1" required><br><br>
+
+    <button type="submit">Generate Bill</button>
+  </form>
+
+  <div id="billOutput"></div>
+
+  <script>
+document.getElementById("billForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  let guestName = document.getElementById("billGuest").value;
+  let roomType = document.getElementById("billRoom").value;
+  let stayDays = parseInt(document.getElementById("stayDays").value);
+
+  let roomPrices = {
+    "Single": 2000,
+    "Double": 3500,
+    "Suite": 5000
+  };
+
+  let pricePerDay = roomPrices[roomType];
+  let total = pricePerDay * stayDays;
+
+  let output = `
+    <h2>Bill Summary</h2>
+    <p><strong>Guest Name:</strong> ${guestName}</p>
+    <p><strong>Room Type:</strong> ${roomType} (₹${pricePerDay}/day)</p>
+    <p><strong>Days Stayed:</strong> ${stayDays}</p>
+    <p><strong>Total Amount:</strong> ₹${total}</p>
+    <br>
+    <button id="feedbackBtn">Give Feedback</button>
+  `;
+
+  document.getElementById("billOutput").innerHTML = output;
+
+  // Redirect to feedback page
+  document.getElementById("feedbackBtn").addEventListener("click", function() {
+    window.location.href = `feedback.html?guest=${encodeURIComponent(guestName)}`;
+  });
+});
+</script>
+</body>
+</html>
